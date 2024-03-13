@@ -9,7 +9,7 @@ from tqdm import tqdm
 This script uploads genome files from collections NCBI source directory to the specified S3 bucket.
 
 Before running this script, make sure the following steps are completed:
-1. Start the SSH tunnel to the minIO server at NERSC:
+1. Start the SSH tunnel to the minIO server at KBase Berkeley:
     ssh -L 9002:ci07:9002 $USERNAME@login1.berkeley.kbase.us -N
 2. Get the secret key from the minIO server in Rancher and set the environment variable:
     i. Go to the minIO server in Rancher
