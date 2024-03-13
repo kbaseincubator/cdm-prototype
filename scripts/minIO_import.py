@@ -14,6 +14,7 @@ Before running this script, make sure the following steps are completed:
 2. Get the secret key from the minIO server in Rancher and set the environment variable:
     i. Go to the minIO server in Rancher
         Stacks → CI → cdm-minio -> ci-core-cdm-minio-1 → Execute Shell → echo $MINIO_ROOT_PASSWORD
+                                                      OR Command Tab -> Environment -> MINIO_ROOT_PASSWORD
     ii. Set the environment variable in the terminal:
         export SECRET_KEY='your_secret_key'
 """
