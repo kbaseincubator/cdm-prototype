@@ -1,0 +1,13 @@
+.idea/*
+coverage.xml
+.coverage
+.dockerignore
+*_pycache__
+.DS_Store
+.vscode
+.settings
+.project
+.pydevproject
+.pytest_cache
+htmlcov
+.ipynb_checkpoints
