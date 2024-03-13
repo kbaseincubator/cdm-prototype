@@ -70,7 +70,7 @@ def _find_files_with_suffix(
 
 def _upload_to_s3(
         genome_id: str,
-        s3_client: boto3.client,
+        s3: boto3.client,
         source_dir: Path,
         suffix: str,
         bucket: str,
@@ -89,12 +89,12 @@ def _upload_to_s3(
             # skip uploading if the file already exists in the bucket
             s3.head_object(Bucket=bucket, Key=s3_key)
         except s3.exceptions.ClientError:
-            s3_client.upload_file(upload_file, bucket, s3_key)
+            s3.upload_file(upload_file, bucket, s3_key)
     else:
         multi_match_genome_ids.append(genome_id) if matching_files else no_match_genome_ids.append(genome_id)
 
 
-if __name__ == '__main__':
+def main():
     meta_dir = Path('/global/homes/t/tgu/GTDB_meta')
     taxonomy_files = [meta_dir / 'bac120_taxonomy_r214.tsv', meta_dir / 'ar53_taxonomy_r214.tsv']
     lineages = ['c__Alphaproteobacteria']
@@ -130,3 +130,7 @@ if __name__ == '__main__':
     print(f"{no_match_genome_ids[:10]}") if no_match_genome_ids else None
     print(f"Num of multiple matching files Genome: {len(multi_match_genome_ids)}")
     print(f"{multi_match_genome_ids[:10]}") if multi_match_genome_ids else None
+
+
+if __name__ == '__main__':
+    main()
