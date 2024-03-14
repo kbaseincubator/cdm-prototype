@@ -10,6 +10,8 @@ def get_genome_ids_with_lineage(
 
     :param taxonomy_files: list of path of taxonomy files
     :param lineages: list of target lineages
+
+    :return: list of genome ids with the specified lineage
     """
     genome_ids = list()
 
