@@ -5,6 +5,8 @@ from pathlib import Path
 import boto3
 from tqdm import tqdm
 
+from scripts.utils import get_genome_ids_with_lineage
+
 """
 This script uploads genome files from collections NCBI source directory to the specified S3 bucket.
 
@@ -27,29 +29,6 @@ SOURCE_DIR = Path('/global/cfs/cdirs/kbase/collections') / 'sourcedata' / 'NCBI'
 SUFFIX = 'protein.faa.gz'
 BUCKET = 'cdm'
 NUM_THREADS = 128
-
-
-def _get_genome_ids_with_lineage(
-        taxonomy_files: list[str | Path],
-        lineages: list[str]
-) -> list[str]:
-    """
-    Get genome ids with the specified lineage from GTDB taxonomy files (e.g. bac120_taxonomy_r214.tsv).
-    """
-    genome_ids = list()
-
-    for file_path in taxonomy_files:
-        with open(file_path, 'r') as file:
-            for line in file:
-                columns = line.strip().split('\t')
-
-                for lineage in lineages:
-                    if lineage in columns[1]:
-                        # Trim the prefix of the genome id as it is not part of the id in NCBI
-                        # e.g. RS_GCF_000979555.1 -> GCF_000979555.1
-                        genome_ids.append(columns[0][3:])
-
-    return genome_ids
 
 
 def _find_files_with_suffix(
@@ -99,7 +78,7 @@ def main():
     meta_dir = Path('/global/homes/t/tgu/GTDB_meta')
     taxonomy_files = [meta_dir / 'bac120_taxonomy_r214.tsv', meta_dir / 'ar53_taxonomy_r214.tsv']
     lineages = ['c__Alphaproteobacteria']
-    lineage_genome_ids = _get_genome_ids_with_lineage(taxonomy_files, lineages)
+    lineage_genome_ids = get_genome_ids_with_lineage(taxonomy_files, lineages)
 
     s3 = boto3.client('s3',
                       endpoint_url=ENDPOINT_URL,
