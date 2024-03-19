@@ -12,7 +12,7 @@ from scripts.utils import upload_to_s3
 This script uploads FastAPI result files from collections NCBI source directory to the specified S3 bucket.
 """
 
-SECRET_KEY = 'xtzd8ITAzOAe'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 ACCESS_KEY = 'cdm-admin'
 ENDPOINT_URL = 'http://localhost:9002'
 BUCKET = 'cdm'
