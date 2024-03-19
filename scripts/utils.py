@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import boto3
+
 
 def get_genome_ids_with_lineage(
         taxonomy_files: list[str | Path],
@@ -27,3 +29,23 @@ def get_genome_ids_with_lineage(
                         genome_ids.append(columns[0][3:])
 
     return genome_ids
+
+
+def upload_to_s3(
+        upload_file: Path,
+        s3_key: str,
+        s3: boto3.client,
+        bucket: str):
+    """
+    Upload the specified file to the specified S3 bucket.
+
+    :param upload_file: path of the file to upload
+    :param s3_key: key of the file in the S3 bucket
+    :param s3: boto3 client for S3
+    :param bucket: name of the S3 bucket
+    """
+    try:
+        # Skip uploading if the file already exists in the bucket
+        s3.head_object(Bucket=bucket, Key=s3_key)
+    except s3.exceptions.ClientError:
+        s3.upload_file(str(upload_file), bucket, s3_key)
