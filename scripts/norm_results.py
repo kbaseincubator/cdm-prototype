@@ -48,9 +48,10 @@ def normalize_eggnog_results(
             df = df.dropna(how='all')
             df.insert(0, 'genome_id', genome_dir.name)
 
-            output_file_name = "processed_" + anno_result.name
+            # Save the processed DataFrame as CSV to the same directory with the prefix "processed_"
+            output_file_name = "processed_" + anno_result.name.replace(".xlsx", ".csv")
             output_file_path = anno_result.parent / output_file_name
-            df.to_excel(output_file_path, index=False)
+            df.to_csv(output_file_path, index=False)
             processed_files.append(output_file_path)
 
     print(f'Processed {len(processed_files)} genome eggNOG results')
