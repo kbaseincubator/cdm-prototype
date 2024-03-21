@@ -39,18 +39,21 @@ def normalize_eggnog_results(
     processed_files = list()
     for batch_dir in batch_dirs:
         genome_dirs = [x for x in batch_dir.iterdir() if x.is_dir()]
-
         for genome_dir in genome_dirs:
-            anno_result = Path(find_files_with_suffix(genome_dir, 'emapper.annotations.xlsx')[0])
+            anno_files = find_files_with_suffix(genome_dir, 'emapper.annotations.xlsx')
+
+            ori_anno = Path([file_path for file_path in anno_files if
+                             (Path(file_path).name.endswith('emapper.annotations.xlsx')
+                              and not Path(file_path).name.startswith('processed_'))][0])
 
             # Read the file into a DataFrame, skipping initial rows starting with ##
-            df = pd.read_excel(anno_result, comment='#')
+            df = pd.read_excel(ori_anno, comment='#')
             df = df.dropna(how='all')
             df.insert(0, 'genome_id', genome_dir.name)
 
             # Save the processed DataFrame as CSV to the same directory with the prefix "processed_"
-            output_file_name = "processed_" + anno_result.name.replace(".xlsx", ".csv")
-            output_file_path = anno_result.parent / output_file_name
+            output_file_name = "processed_" + ori_anno.name.replace(".xlsx", ".csv")
+            output_file_path = ori_anno.parent / output_file_name
             df.to_csv(output_file_path, index=False)
             processed_files.append(output_file_path)
 
