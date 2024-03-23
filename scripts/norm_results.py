@@ -24,7 +24,7 @@ def normalize_eggnog_results(
     """
     eggNOG is executed with the collections framework, so the results are in the collections directory.
 
-    This function process the emapper.annotations.xlsx file from eggNOG and append the genome_id to the first column.
+    This function process the emapper.annotations.xlsx file from eggNOG and prepends the genome_id to the first column.
     And save the processed file to the same directory with the prefix "processed_".
 
     :param coll_root: root directory of the collections project
