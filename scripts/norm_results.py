@@ -48,7 +48,7 @@ def normalize_eggnog_results(
 
             # Read the file into a DataFrame, skipping initial rows starting with ##
             df = pd.read_excel(ori_anno, comment='#')
-            df = df.dropna(how='all')
+            df = df.dropna(how='all')  # drops rows with all NaN values
             df.insert(0, 'genome_id', genome_dir.name)
 
             # Save the processed DataFrame as CSV to the same directory with the prefix "processed_"
