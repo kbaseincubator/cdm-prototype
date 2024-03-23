@@ -53,8 +53,9 @@
     We also manually adjust the 'threads' variable in task_generator.py, as the default is 32. You can find the relevant code [here](https://github.com/kbase/collections/blob/develop/src/loaders/jobs/taskfarmer/task_generator.py)
 
 ## Results
-Copy the result files to minIO
-```bash
-cd /global/cfs/cdirs/kbase/collections/collectionsdata/NONE/CDM/f__Rhodanobacteraceae/eggnog/batch_no_batch_size_129_node_job_0
-mc cp -r ./ cdm-minio/cdm/eggnog/Rhodanobacteraceae
-```
+- Execute `normalize_eggnog_results()` function from `norm_results.py` to generate a processed annotated Excel file.
+- Copy the result files to minIO
+  ```bash
+  cd /global/cfs/cdirs/kbase/collections/collectionsdata/NONE/CDM/f__Rhodanobacteraceae/eggnog/batch_no_batch_size_129_node_job_0
+  mc cp -r ./ cdm-minio/cdm/eggnog/Rhodanobacteraceae
+  ```

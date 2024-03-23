@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import boto3
@@ -49,3 +50,20 @@ def upload_to_s3(
         s3.head_object(Bucket=bucket, Key=s3_key)
     except s3.exceptions.ClientError:
         s3.upload_file(str(upload_file), bucket, s3_key)
+
+
+def find_files_with_suffix(
+        directory: Path,
+        suffix: str
+) -> list[str]:
+    """
+    Find files with the specified suffix in the directory and its subdirectories.
+    """
+    matching_files = []
+
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if file.endswith(suffix):
+                matching_files.append(os.path.join(root, file))
+
+    return matching_files

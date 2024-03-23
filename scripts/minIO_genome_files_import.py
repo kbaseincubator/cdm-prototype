@@ -5,7 +5,7 @@ from pathlib import Path
 import boto3
 from tqdm import tqdm
 
-from scripts.utils import get_genome_ids_with_lineage, upload_to_s3
+from scripts.utils import get_genome_ids_with_lineage, upload_to_s3, find_files_with_suffix
 
 """
 This script uploads genome files from collections NCBI source directory to the specified S3 bucket.
@@ -31,23 +31,6 @@ BUCKET = 'cdm'
 NUM_THREADS = 128
 
 
-def _find_files_with_suffix(
-        directory: Path,
-        suffix: str
-) -> list[str]:
-    """
-    Find files with the specified suffix in the directory and its subdirectories.
-    """
-    matching_files = []
-
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            if file.endswith(suffix):
-                matching_files.append(os.path.join(root, file))
-
-    return matching_files
-
-
 def _generate_target_files_genome_source(
         source_dir: Path = SOURCE_DIR,
         suffix: str = 'protein.faa.gz'):
@@ -70,7 +53,7 @@ def _generate_target_files_genome_source(
 
     for genome_id in lineage_genome_ids:
         genome_dir = source_dir / genome_id
-        matching_files = _find_files_with_suffix(genome_dir, suffix)
+        matching_files = find_files_with_suffix(genome_dir, suffix)
 
         if len(matching_files) == 1:
             upload_file = genome_dir / matching_files[0]
@@ -82,7 +65,6 @@ def _generate_target_files_genome_source(
 
 
 def main():
-
     target_files, no_match_genome_ids, multi_match_genome_ids = _generate_target_files_genome_source(SOURCE_DIR)
 
     s3 = boto3.client('s3',
