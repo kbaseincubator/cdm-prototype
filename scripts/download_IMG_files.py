@@ -27,7 +27,7 @@ def main():
 
     genome_count = defaultdict(int)
     total_files_downloaded = 0
-    objs = objs[:3]
+
     for obj in objs:
         key = obj['Key']
 
