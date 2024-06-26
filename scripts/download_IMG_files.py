@@ -1,3 +1,8 @@
+"""
+This script downloads IMG files from the specified S3 bucket to the local directory in NERSC.
+"""
+
+
 import os
 from collections import defaultdict
 from pathlib import Path
