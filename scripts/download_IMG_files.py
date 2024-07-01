@@ -39,8 +39,8 @@ def main():
         # Filter to download files with specified suffixes
         if any(key.lower().endswith(suffix.lower()) for suffix in FILE_SUFFIXES):
             parts = key.split('/')
-            genome_folder = parts[
-                -2]  # Assuming the structure 'bucket_name/uuid/img/submissions/genome_folder/file_name'
+            # Assuming the structure 'bucket_name/uuid/img/submissions/genome_folder/file_name'
+            genome_folder = parts[-2]
             file_name = parts[-1]
 
             genome_directory = SOURCE_DIR / genome_folder
