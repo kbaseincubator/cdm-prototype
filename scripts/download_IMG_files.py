@@ -40,20 +40,20 @@ def main():
             # Filter to download files with specified suffixes
             if any(key.lower().endswith(suffix.lower()) for suffix in FILE_SUFFIXES):
                 parts = key.split('/')
-                # Assuming the structure 'bucket_name/uuid/img/submissions/genome_folder/file_name' - genome_folder is an integer
-                genome_folder = parts[-2]
+                # Assuming the structure 'bucket_name/uuid/img/submissions/IMG_submission_id/file_name' - IMG_submission_id is an integer number
+                img_submission_id = parts[-2]
                 file_name = parts[-1]
 
-                genome_directory = SOURCE_DIR / genome_folder
-                os.makedirs(genome_directory, exist_ok=True)
+                img_submission_directory = SOURCE_DIR / img_submission_id
+                os.makedirs(img_submission_directory, exist_ok=True)
 
-                local_file_path = genome_directory / file_name
+                local_file_path = img_submission_directory / file_name
 
                 # Download the file
                 s3_client.download_file(BUCKET, key, local_file_path)
                 print(f"Downloaded {file_name} to {local_file_path}")
 
-                genome_count[genome_folder] += 1
+                genome_count[img_submission_id] += 1
                 total_files_downloaded += 1
 
     print(f"Total files downloaded: {total_files_downloaded}")
