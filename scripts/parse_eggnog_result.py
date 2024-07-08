@@ -46,8 +46,8 @@ def _upload_to_minio(processed_file: Path, data_id: str):
         raise ValueError(f"Error uploading {processed_file} to MinIO: {e}")
 
 
-def _validate_directory(data_dir: Path) -> str:
-    """Validate if the necessary files are present in the directory."""
+def _get_source_file(data_dir: Path) -> str:
+    """Get the source file name from the metadata file."""
 
     # The presence of the metadata file indicates the eggnog run completed successfully
     metadata_file = data_dir / 'eggnog_run_metadata.json'
@@ -103,7 +103,7 @@ def _process_annotation_file(data_dir: Path, data_id: str):
     """Process the annotation file and upload the processed file to MinIO."""
 
     try:
-        source_file = _validate_directory(data_dir)
+        source_file = _get_source_file(data_dir)
         df = _read_and_process_data(data_dir, source_file)
         processed_file = _save_processed_data(data_dir, df, data_id, source_file)
         _upload_to_minio(processed_file, data_id)
@@ -129,6 +129,11 @@ def main():
 
     print(f"Total data IDs: {total_data_ids}")
     print(f"Processed data IDs: {processed_data_ids}")
+
+    if processed_data_ids == 0:
+        raise ValueError("No data has been processed!")
+    elif processed_data_ids < total_data_ids:
+        raise ValueError("Some data has not been processed. Please check the logs for more details.")
 
 
 if __name__ == '__main__':
