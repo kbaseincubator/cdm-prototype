@@ -43,7 +43,7 @@ def _upload_to_minio(processed_file: Path, data_id: str):
         s3_client.upload_file(str(processed_file), BUCKET, s3_path)
         print(f"File has been uploaded to s3://{BUCKET}/{s3_path}")
     except Exception as e:
-        print(f"Error uploading file: {e}")
+        raise ValueError(f"Error uploading {processed_file} to MinIO: {e}")
 
 
 def _validate_directory(data_dir: Path) -> str:
