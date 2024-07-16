@@ -19,17 +19,18 @@ The results are summarized in the table below:
 
 ### Test with scratch drive (Recommended by NERSC)
 
-Copied the source files to `$SCRATCH` and ran the same tests. The results are summarized in the table below:
+Copied the source files (same genome files as the above test) to `$SCRATCH` and ran the same tests. The results are
+summarized in the table below:
 
-| Number of nodes | Parallelization within a node | Time to finish 50 genomes                              | Average node time per genome |
-|-----------------|-------------------------------|--------------------------------------------------------|------------------------------|
-| 1               | 1                             | 54.83 mins                                             | 1.1 min                      |
-| 1               | 2                             | 39.77 mins (both batches)                              | 0.79 min                     |
-| 1               | 5                             | 27.92 mins (fastest batch), 37.11 mins (slowest batch) | 0.74 min                     |
-| 1               | 10                            | 22.62 mins (fastest batch), 34.7 mins (slowest batch)  | 0.69 min                     |
-| 1               | 15                            | 18.8 mins (fastest batch), 30.79 mins (slowest batch)  | 0.62 min                     |
-| 2               | 1                             | 25.91 mins (fastest node), 26.85 mins (slowest node)   | 1.06 min                     |
-| 5               | 1                             | 10.03 mins (fastest node), 13.24 mins (slowest node)   | 1.21 min                     |
+| Number of nodes | Parallelization within a node | Time to finish 50 genomes                              | Total node time | Average node time per genome |
+|-----------------|-------------------------------|--------------------------------------------------------|-----------------|------------------------------|
+| 1               | 1                             | 54.83 mins                                             | 54.83 mins      | 1.1 min                      |
+| 1               | 2                             | 39.77 mins (both batches)                              | 39.77 mins      | 0.79 min                     |
+| 1               | 5                             | 27.92 mins (fastest batch), 37.11 mins (slowest batch) | 37.11 mins      | 0.74 min                     |
+| 1               | 10                            | 22.62 mins (fastest batch), 34.7 mins (slowest batch)  | 34.7 mins       | 0.69 min                     |
+| 1               | 15                            | 18.8 mins (fastest batch), 30.79 mins (slowest batch)  | 30.79 mins      | 0.62 min                     |
+| 2               | 1                             | 25.91 mins (fastest node), 26.85 mins (slowest node)   | 52.76 mins      | 1.06 min                     |
+| 5               | 1                             | 10.03 mins (fastest node), 13.24 mins (slowest node)   | 60.46 mins      | 1.21 min                     |
 
 Note: Creating a symbolic link to the source files/tool libraries in the scratch directory does not seem to work,
 as it defeats the purpose of using the scratch area for fast file access.
